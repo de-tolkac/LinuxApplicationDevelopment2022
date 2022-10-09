@@ -98,10 +98,6 @@ int main(int argc, char** argv) {
     box(win, 0, 0); 
     wmove(win, 1, 0); 
     while((c = wgetch(win)) != 27) {
-            //wprintw(win, "  Key: %d, Name: %s\n", c, keyname(c));
-            //box(win, 0, 0); 
-            //wrefresh(win);
-
             for (int i = 0; i < linesNumber; ++i) {
                 wprintw(win, "  %d: %s\n", i + 1, data[i]);
             }
