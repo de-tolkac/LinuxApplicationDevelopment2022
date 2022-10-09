@@ -1,0 +1,6 @@
+prog
+prog-a
+prog-so
+*.o
+*.so
+*-test.txt
