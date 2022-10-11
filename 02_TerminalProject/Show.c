@@ -91,18 +91,34 @@ int main(int argc, char** argv) {
     win = newwin(LINES-2*DX, COLS-2*DX, DX, DX);
     keypad(win, TRUE);
     scrollok(win, TRUE);
-    for (int i = 0; i < linesNumber; ++i) {
-        wprintw(win, "  %d: %s\n", i + 1, data[i]);
+
+    int startIdx = 0;
+
+
+    wmove(win, 1, 0);
+
+    for (int i = startIdx, k = 0; i < linesNumber && k < 16; ++i, ++k) {
+        wprintw(win, "  %d: %s", i + 1, data[i]);
     }
 
     box(win, 0, 0); 
-    wmove(win, 1, 0); 
+    curs_set(0);
+
     while((c = wgetch(win)) != 27) {
-            for (int i = 0; i < linesNumber; ++i) {
-                wprintw(win, "  %d: %s\n", i + 1, data[i]);
-            }
-            box(win, 0, 0); 
-            wrefresh(win);
+        werase(win);
+        wmove(win, 1, 0);
+        
+        if ((int)c == 258 && startIdx + 16 <= linesNumber) {
+            startIdx += 1;
+        } else if ((int)c == 259 && startIdx > 0) {
+            startIdx -= 1;
+        }
+
+        for (int i = startIdx, k = 0; i < linesNumber && k < 16; ++i, ++k) {
+            wprintw(win, "  %d: %s", i + 1, data[i]);
+        }
+
+        box(win, 0, 0); 
     }
     endwin();
 
